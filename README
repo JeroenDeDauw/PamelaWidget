@@ -1,0 +1,17 @@
+This is the README file of Pamela widget for Android.
+For more info see http://0x20.be/Pamela_widget_for_Android
+
+== About ==
+
+Pamela widget for Android is a simple Android application that displays lists
+of activate devices at a space using the Pamela web service. More info
+on the pamela can be found at http://hackerspace.be/Pamela.
+
+This application is released on the Android market place under the name
+"Pamela widget" and can be downloaded for free. The source code can
+be found on github at https://github.com/JeroenDeDauw/PamelaWidget
+
+== Some credits ==
+Data is obtained via the Pamela webservice created by Pieter Iserbyt
+This app is sort of a remake of https://github.com/JeroenDeDauw/Pamela-for-Android by Jeroen De Dauw
+It is inspired by and (codewise) based on https://code.google.com/p/irail-liveboard/ by Christophe Versieux 
