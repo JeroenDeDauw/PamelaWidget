@@ -6,6 +6,10 @@ public class Entity {
 	protected int type;
 	protected int status;
 	
+	public Entity(String name) {
+		this(name, 0, 0);
+	}	
+	
 	public Entity(String name, int type, int status) {
 		this.name = name;
 		this.type = type;

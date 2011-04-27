@@ -106,7 +106,7 @@ public class EntityBoardActivity extends ListActivity {
 		}
 		httpclient.getParams().setParameter("http.useragent",  "PamelaWidget "+myVersion+ " for Android - "
 				+ System.getProperty("http.agent"));
-		String url = "https://0x20.be/pam/data/?lang=" + getString(R.string.lang);
+		String url = "https://www.0x20.be/pam/data/?lang=" + getString(R.string.lang);
 		// Prepare a request object
 		HttpGet httpget = new HttpGet(url.replace(" ", "%20"));
 		Log.i("", url);
@@ -114,62 +114,40 @@ public class EntityBoardActivity extends ListActivity {
 		// Execute the request
 		HttpResponse response;
 
-		JSONObject json = new JSONObject();
+		JSONArray json = new JSONArray();
 		// SimpleDateFormat dateFormatter = new
 		// SimpleDateFormat("dd/MM/yy HH:mm");
 		
 		Date currentDate = null;
-		String space = null;
+		String space = "0x20";
 		ArrayList<Entity> entities = new ArrayList<Entity>();
 
 		try {
 			response = httpclient.execute(httpget);
 
-			HttpEntity entity = response.getEntity();
+			HttpEntity httpEntity = response.getEntity();
 
-			if (entity != null) {
+			if (httpEntity != null) {
 
 				// A Simple JSON Response Read
-				InputStream instream = entity.getContent();
+				InputStream instream = httpEntity.getContent();
 				String result = convertStreamToString(instream);
 
-				json = new JSONObject(result);
+				json = new JSONArray(result);
 
 				instream.close();
 			}
-
-			double attributeTimestamp = json.getDouble("timestamp") * 1000;
-			currentDate = new Date((long) attributeTimestamp);
-/*
-			space = "0x20"; //json.getString("space");
-			JSONArray entityList = json.getJSONArray( "" );
 			
-			for (int i = 0; i < Integer.valueOf(attributeNumber); i++) {
-
-				long attributeTime = departureArray.getJSONObject(i).getLong( "time") * 1000;
-				Date time = new Date(attributeTime);
-
+			for (int i = 0; i < json.length(); ++i) {
 				entities.add(new Entity(
-						
+					json.getString(i)
 				));
 			}
-*/
+
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		entities.add(new Entity(
-			"foo",
-			1,
-			1
-		));
-		
-		entities.add(new Entity(
-				"bar",
-				1,
-				1
-			));		
 		
 		return new EntityBoard(currentDate, space, entities);
 	
