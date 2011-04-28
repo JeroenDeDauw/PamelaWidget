@@ -33,7 +33,6 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
-import org.json.JSONObject;
 
 import android.app.ListActivity;
 import android.content.pm.PackageManager;
@@ -45,9 +44,6 @@ import android.view.View;
 import android.view.Window;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import pam.widget.EntityBoard;
-import pam.widget.Entity;
-import pam.widget.EntityAdapter;
 
 public class EntityBoardActivity extends ListActivity {
 	/** Called when the activity is first created. */
@@ -130,8 +126,6 @@ public class EntityBoardActivity extends ListActivity {
 		HttpResponse response;
 
 		JSONArray json = new JSONArray();
-		// SimpleDateFormat dateFormatter = new
-		// SimpleDateFormat("dd/MM/yy HH:mm");
 		
 		Date currentDate = new Date();
 		String space = extras.getString("Name");
@@ -158,15 +152,13 @@ public class EntityBoardActivity extends ListActivity {
 					json.getString(i)
 				));
 			}
-
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 		return new EntityBoard(currentDate, space, entities);
-	
-}
+	}
 
 	private static String convertStreamToString(InputStream is) {
 

@@ -3,7 +3,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:orientation="horizontal" android:layout_width="fill_parent"
 	android:layout_height="wrap_content">
-	<TextView style="@style/yellow_liveboard" android:id="@+id/name"
+	<TextView style="@style/white_liveboard" android:id="@+id/name"
+		android:text="City START" android:layout_width="0dip"
+		android:layout_height="wrap_content" android:layout_weight="4"
+		android:gravity="center" android:singleLine="true" android:ellipsize="marquee" />	
+	<TextView style="@style/yellow_liveboard" android:id="@+id/type"
 		android:text="00:00" android:layout_width="0dip"
 		android:layout_height="wrap_content" android:layout_weight="2"
 		android:gravity="center" android:paddingRight="5dip"

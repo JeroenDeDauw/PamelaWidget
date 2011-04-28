@@ -19,17 +19,33 @@
 
 package pam.widget;
 
+import java.util.HashMap;
+import java.util.Map;
+
+
 public class Entity {
 
+	public static enum Status {
+		ACTIVE,
+		AWAY
+	};
+	
+	public static enum Type {
+		MEMBER,
+		PERSON,
+		DEVICE,
+		UNKNOWN
+	};
+	
 	protected String name;
-	protected int type;
-	protected int status;
+	protected Type type;
+	protected Status status;
 	
 	public Entity(String name) {
-		this(name, 0, 0);
-	}	
+		this(name, Type.UNKNOWN, Status.ACTIVE);
+	}
 	
-	public Entity(String name, int type, int status) {
+	public Entity(String name, Type type, Status status) {
 		this.name = name;
 		this.type = type;
 		this.status = status;
@@ -39,12 +55,25 @@ public class Entity {
 		return this.name;
 	}
 	
-	public int getType() {
+	public Type getType() {
 		return this.type;
 	}
 	
-	public int getStatus() {
+	public Status getStatus() {
 		return this.status;
-	}	
+	}
+	
+	public String getTypeName() {
+		Map<Type, String> names = new HashMap<Type, String>(){
+			{
+				put(Type.MEMBER, "Member");
+				put(Type.PERSON, "Person");
+				put(Type.DEVICE, "Device");
+				put(Type.UNKNOWN, "Unknown");
+			}
+		};
+		
+		return names.get( this.getType() );
+	}
 	
 }

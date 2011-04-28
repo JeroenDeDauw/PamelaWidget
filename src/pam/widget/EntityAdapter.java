@@ -21,19 +21,19 @@ package pam.widget;
 
 import java.util.ArrayList;
 
+import pam.widget.Entity.Type;
 import android.content.Context;
-import android.text.Html;
+import android.content.res.Resources;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
-import pam.widget.R;
 
 public class EntityAdapter extends ArrayAdapter<Entity> {
 	protected ArrayList<Entity> items;
-
+	
 	public EntityAdapter(Context context, int textViewResourceId, ArrayList<Entity> items) {
 		super(context, textViewResourceId, items);
 		this.items = items;
@@ -54,17 +54,20 @@ public class EntityAdapter extends ArrayAdapter<Entity> {
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			v = vi.inflate(R.layout.liveboardrow, null);
 		}
+		
 		Entity entity = items.get(position);
 
 		if (entity != null) {
+			TextView typeTv = (TextView) v.findViewById(R.id.type);
 			TextView nameTv = (TextView) v.findViewById(R.id.name);
 
+			typeTv.setText(entity.getTypeName());
 			nameTv.setText(entity.getName());
 
 			int colorPos = position % colors.length;
 			v.setBackgroundColor(colors[colorPos]);
-
 		}
+		
 		return v;
 	}
 
@@ -75,7 +78,5 @@ public class EntityAdapter extends ArrayAdapter<Entity> {
 		else
 			return null;
 	}
-
-
 
 }
