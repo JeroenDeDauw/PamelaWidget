@@ -4,4 +4,5 @@
     <string name="app_name">Pamela Widget</string>
 <string name="lang">en</string>
 <string name="pamela_widget">Pamela widget</string>
+<string name="loading">Loading</string>
 </resources>

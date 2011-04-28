@@ -1,3 +1,22 @@
+/*
+	Copyright 2011 by Jeroen De Dauw
+
+    This file is part of Pamela widget for Android.
+
+    Pamela for Android is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    It is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this code.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
 package pam.widget;
 
 import java.io.BufferedReader;
@@ -32,7 +51,7 @@ import pam.widget.EntityAdapter;
 
 public class EntityBoardActivity extends ListActivity {
 	/** Called when the activity is first created. */
-	TextView currentTimeTv ;
+	TextView statusTv ;
 	TextView titleTv;
 	RelativeLayout emptyRl;
 	SimpleDateFormat hourFormatter = new SimpleDateFormat("HH:mm");
@@ -42,7 +61,7 @@ public class EntityBoardActivity extends ListActivity {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.main);
-		currentTimeTv = (TextView) findViewById(R.id.currentTime);
+		statusTv = (TextView) findViewById(R.id.status);
 		titleTv = (TextView) findViewById(R.id.title);
 		emptyRl = (RelativeLayout) findViewById(R.id.empty);
 
@@ -56,6 +75,7 @@ public class EntityBoardActivity extends ListActivity {
 			
 			runOnUiThread(new Runnable() {
 			    public void run() {
+			    	statusTv.setText(R.string.loading);
 			    	titleTv.setText(extras.getString("Name"));
 			    }
 			});
@@ -69,7 +89,7 @@ public class EntityBoardActivity extends ListActivity {
 			String space = result.getSpace();
 			
 			if (currentDate != null) {
-				currentTimeTv.setText(hourFormatter.format(currentDate));
+				statusTv.setText(hourFormatter.format(currentDate));
 			}
 				
 			if (space != null) {
@@ -113,7 +133,7 @@ public class EntityBoardActivity extends ListActivity {
 		// SimpleDateFormat dateFormatter = new
 		// SimpleDateFormat("dd/MM/yy HH:mm");
 		
-		Date currentDate = null;
+		Date currentDate = new Date();
 		String space = extras.getString("Name");
 		ArrayList<Entity> entities = new ArrayList<Entity>();
 
