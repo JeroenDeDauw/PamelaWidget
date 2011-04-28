@@ -40,6 +40,7 @@ public class Entity {
 	protected String name;
 	protected Type type;
 	protected Status status;
+	protected String customType = "";
 	
 	public Entity(String name) {
 		this(name, Type.UNKNOWN, Status.ACTIVE);
@@ -63,7 +64,15 @@ public class Entity {
 		return this.status;
 	}
 	
+	public void setCustomType( String type ) {
+		this.customType = type;
+	}
+	
 	public String getTypeName() {
+		if ( this.customType != "" ) {
+			return this.customType;
+		}
+		
 		Map<Type, String> names = new HashMap<Type, String>(){
 			{
 				put(Type.MEMBER, "Member");

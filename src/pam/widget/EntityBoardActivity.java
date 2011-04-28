@@ -34,6 +34,8 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 
+import pam.widget.Entity.Status;
+import pam.widget.Entity.Type;
 import android.app.ListActivity;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -148,16 +150,38 @@ public class EntityBoardActivity extends ListActivity {
 			}
 			
 			for (int i = 0; i < json.length(); ++i) {
-				entities.add(new Entity(
-					json.getString(i)
-				));
+				String rawName = json.getString(i);
+				String displayName = rawName;
+				Type type = Type.UNKNOWN;
+				
+				if ( rawName.split( ":" ).length != 6 )  {
+					type = rawName.contains( "(" ) && rawName.contains( ")" ) ? Type.DEVICE : Type.PERSON; 
+				}
+				
+				Entity entity = new Entity( displayName, type, Status.ACTIVE );
+				
+				entities.add(entity);
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		return new EntityBoard(currentDate, space, entities);
+		ArrayList<Entity> orderedEntities = new ArrayList<Entity>();
+		
+		this.addEntitiesOfType(entities, orderedEntities, Type.PERSON);
+		this.addEntitiesOfType(entities, orderedEntities, Type.DEVICE);
+		this.addEntitiesOfType(entities, orderedEntities, Type.UNKNOWN);
+		
+		return new EntityBoard(currentDate, space, orderedEntities);
+	}
+	
+	protected void addEntitiesOfType( ArrayList<Entity> source, ArrayList<Entity> destination, Type type ) {
+		for (int i = 0; i < source.size(); ++i) {
+			if ( source.get(i).getType() == type ) {
+				destination.add(source.get(i));
+			}
+		}		
 	}
 
 	private static String convertStreamToString(InputStream is) {
