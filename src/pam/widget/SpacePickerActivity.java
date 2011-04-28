@@ -1,5 +1,7 @@
 package pam.widget;
 
+import java.util.HashMap;
+
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,8 +9,6 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
-
-import pam.widget.FilterTextWatcher;
 
 public class SpacePickerActivity extends ListActivity {
 	/** Called when the activity is first created. */
@@ -39,7 +39,7 @@ public class SpacePickerActivity extends ListActivity {
 
 		Intent shortcutIntent = new Intent(this, EntityBoardActivity.class);
 		shortcutIntent.putExtra("Name", name);
-		shortcutIntent.putExtra("URL", "https://www.0x20.be/pam/data/");
+		shortcutIntent.putExtra("URL", getSpaces().get(name));
 		shortcutIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		shortcutIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
@@ -67,8 +67,18 @@ public class SpacePickerActivity extends ListActivity {
 		finish();	
 	}
 
+	// TODO: stupid to have the names twice, but can't get it to work with a hasMap; evil java is evil!
 	public final static String[] LIST_OF_SPACES = new String[] {
-		"0x20",
-		"HSBXL"
+		"0x20", "HSBXL"
 	};
+	
+	public final static HashMap<String, String> getSpaces() {
+		HashMap<String, String> spaces = new HashMap<String, String>();
+		
+		spaces.put( "0x20", "https://www.0x20.be/pam/data/" );
+		spaces.put( "HSBXL", "https://www.hackerspace.be/pam/macs/" );
+		
+		return spaces;
+	}
+	
 }

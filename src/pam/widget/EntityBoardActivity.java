@@ -52,14 +52,15 @@ public class EntityBoardActivity extends ListActivity {
 	private class DownloadEntityBoardTask extends AsyncTask<String, Void, EntityBoard> {
 		@Override
 		protected EntityBoard doInBackground(String... urls) {
-			final String mIntentString = getStationNameFromIntent();
+			final Bundle extras = getIntent().getExtras();
+			
 			runOnUiThread(new Runnable() {
 			    public void run() {
-			    	titleTv.setText(mIntentString);
+			    	titleTv.setText(extras.getString("Name"));
 			    }
 			});
 			
-			return getEntityBoardFromApi(mIntentString);
+			return getEntityBoardFromApi(extras);
 		}
 
 		@Override
@@ -86,15 +87,8 @@ public class EntityBoardActivity extends ListActivity {
 		task.execute();
 
 	}
-
-	private String getStationNameFromIntent (){
-			Bundle extras = getIntent().getExtras();
-			return extras != null ? extras.getString("Name")
-					: "nothing passed in";		
-		
-	}
 	
-	private EntityBoard getEntityBoardFromApi (String mIntentString){
+	private EntityBoard getEntityBoardFromApi (Bundle extras){
 		HttpClient httpclient = new DefaultHttpClient();
 		
 		String myVersion = "0.0";
@@ -106,7 +100,8 @@ public class EntityBoardActivity extends ListActivity {
 		}
 		httpclient.getParams().setParameter("http.useragent",  "PamelaWidget "+myVersion+ " for Android - "
 				+ System.getProperty("http.agent"));
-		String url = "https://www.0x20.be/pam/data/?lang=" + getString(R.string.lang);
+		
+		String url = extras.getString("URL") + "?lang=" + getString(R.string.lang);
 		// Prepare a request object
 		HttpGet httpget = new HttpGet(url.replace(" ", "%20"));
 		Log.i("", url);
@@ -119,7 +114,7 @@ public class EntityBoardActivity extends ListActivity {
 		// SimpleDateFormat("dd/MM/yy HH:mm");
 		
 		Date currentDate = null;
-		String space = "0x20";
+		String space = extras.getString("Name");
 		ArrayList<Entity> entities = new ArrayList<Entity>();
 
 		try {

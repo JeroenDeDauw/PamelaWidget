@@ -8,10 +8,17 @@
 			android:theme="@android:style/Theme.Dialog" android:configChanges="keyboardHidden|orientation">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
-				<category android:name="android.intent.category.LAUNCHER" />
+				<!--<category android:name="android.intent.category.LAUNCHER" />-->
 			</intent-filter>
 		</activity>
 
+		<activity android:name=".SpacePickerActivity"
+			android:label="@string/pamela_widget" android:configChanges="keyboardHidden|orientation">
+			<intent-filter>
+				<action android:name="android.intent.action.CREATE_SHORTCUT" />
+				<category android:name="android.intent.category.DEFAULT" />
+			</intent-filter>
+		</activity>
     </application>
 
 	<uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
