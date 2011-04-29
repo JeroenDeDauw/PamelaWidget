@@ -103,7 +103,6 @@ public class EntityBoardActivity extends ListActivity {
 	public void displayEntityBoard() {
 		DownloadEntityBoardTask task = new DownloadEntityBoardTask();
 		task.execute();
-
 	}
 	
 	private EntityBoard getEntityBoardFromApi (Bundle extras){
@@ -153,12 +152,24 @@ public class EntityBoardActivity extends ListActivity {
 				String rawName = json.getString(i);
 				String displayName = rawName;
 				Type type = Type.UNKNOWN;
+				String customType = "";
 				
 				if ( rawName.split( ":" ).length != 6 )  {
-					type = rawName.contains( "(" ) && rawName.contains( ")" ) ? Type.DEVICE : Type.PERSON; 
+					if ( rawName.contains( "(" ) && rawName.split("(")[1].contains( ")" ) ) {
+						type =  Type.DEVICE;
+						customType = displayName.split("(")[1].split(")")[0];
+						displayName = displayName.split("(")[1];
+					}
+					else {
+						type =  Type.PERSON;	
+					}
 				}
 				
 				Entity entity = new Entity( displayName, type, Status.ACTIVE );
+				
+				if ( customType != "" ) {
+					entity.setCustomType(customType);
+				}
 				
 				entities.add(entity);
 			}
@@ -170,6 +181,7 @@ public class EntityBoardActivity extends ListActivity {
 		ArrayList<Entity> orderedEntities = new ArrayList<Entity>();
 		
 		this.addEntitiesOfType(entities, orderedEntities, Type.PERSON);
+		//Boolean spaceIsOpen = orderedEntities.size() > 0;
 		this.addEntitiesOfType(entities, orderedEntities, Type.DEVICE);
 		this.addEntitiesOfType(entities, orderedEntities, Type.UNKNOWN);
 		
