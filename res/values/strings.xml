@@ -10,4 +10,6 @@
 <string name="person">person</string>
 
 <string name="unknown">unknown</string>
+<string name="open">open</string>
+<string name="closed">closed</string>
 </resources>

@@ -155,13 +155,15 @@ public class EntityBoardActivity extends ListActivity {
 				String customType = "";
 				
 				if ( rawName.split( ":" ).length != 6 )  {
-					if ( rawName.contains( "(" ) && rawName.split("(")[1].contains( ")" ) ) {
+					
+					
+					if ( rawName.indexOf("(") != -1 && rawName.indexOf(")") > rawName.indexOf("(") ) {
 						type =  Type.DEVICE;
-						customType = displayName.split("(")[1].split(")")[0];
-						displayName = displayName.split("(")[1];
+						customType = rawName.substring( rawName.indexOf("(") + 1, rawName.indexOf(")") - 1 );
+						displayName = rawName.substring( 0, rawName.indexOf("(") );
 					}
 					else {
-						type =  Type.PERSON;	
+						type =  Type.PERSON;
 					}
 				}
 				
@@ -181,9 +183,11 @@ public class EntityBoardActivity extends ListActivity {
 		ArrayList<Entity> orderedEntities = new ArrayList<Entity>();
 		
 		this.addEntitiesOfType(entities, orderedEntities, Type.PERSON);
-		//Boolean spaceIsOpen = orderedEntities.size() > 0;
+		Boolean spaceIsOpen = orderedEntities.size() > 0;
 		this.addEntitiesOfType(entities, orderedEntities, Type.DEVICE);
 		this.addEntitiesOfType(entities, orderedEntities, Type.UNKNOWN);
+		
+		space = space + " (" + ( spaceIsOpen ? R.string.open : R.string.closed ) + ")"; 
 		
 		return new EntityBoard(currentDate, space, orderedEntities);
 	}
