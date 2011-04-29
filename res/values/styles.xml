@@ -40,4 +40,22 @@
 		<item name="android:textColor">#FF0000</item>
 	</style>
 
+	<style name="HomeButton">
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/darkblue</item>
+        <item name="android:background">@null</item>
+    </style>
+    
+	<style name="HomeButton2">
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textStyle">italic</item>
+        <item name="android:textColor">@color/darkblue</item>
+        <item name="android:background">@null</item>
+    </style>    
+
 </resources>
